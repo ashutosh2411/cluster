@@ -18,16 +18,18 @@ dataset = sklearn.datasets.load_files('/home/mabrin/project/cluster/datasets/bbc
 
 true_k = 5 #no of groups
 
-vectorizer = TfidfVectorizer(max_df=.3, max_features=175 ,min_df=10 ,
+vectorizer = TfidfVectorizer(max_df=.5, max_features=310 ,min_df=10 ,
                                     stop_words='english',use_idf=True)
                                     
 X = vectorizer.fit_transform(dataset.data[:125])
+Y = vectorizer.fit_transform(dataset.data[125:])
+
 
 km = MiniBatchKMeans(n_clusters=true_k, init='k-means++', n_init=1,
                     init_size=1000,batch_size=1000)
 km.fit(X)
 
-Y = vectorizer.fit_transform(dataset.data[125:])
+
 
 cur = Y.toarray()
 
@@ -41,6 +43,10 @@ for i in km.labels_ :
 left_doc , tmp = Y.shape
 
 tmp = [] 
+x = km.cluster_centers_[1]
+y = cur[1]
+print(np.shape(x.reshape(1,-1)))
+print(np.shape(y.reshape(1,-1)))
 for i in range(0,left_doc):
     clust = []
     for j in range (5):
@@ -48,9 +54,17 @@ for i in range(0,left_doc):
         y = cur[i]
         clust.append(sklearn.metrics.pairwise.euclidean_distances(x.reshape(1,-1) ,
                  y.reshape(1,-1), Y_norm_squared=None, squared=False, X_norm_squared=None))
-    #print(np.argmin(clust))
-    tmp=tmp+[i]
+    k =np.argmin(clust)
+    clusters[k].cen
+    clusters[k].append(dataset.filenames[i+125])
+    
+for i in range(5):
+        for j in clusters[i]:
+                print(j)    
+        print()
 
-outfile = "out.txt"
-np.savetxt(outfile,(np.hstack((dataset.filenames[125:],tmp))) ,delimiter = ',')   
+
+
+#outfile = "out.txt"
+#np.savetxt(outfile,(np.hstack((dataset.filenames[125:],tmp))) ,delimiter = ',')   
 
