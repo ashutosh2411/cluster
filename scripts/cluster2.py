@@ -1,7 +1,10 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from collections import defaultdict
 import sklearn.datasets
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.cluster import MiniBatchKMeans
 import numpy as np
 import sklearn
@@ -9,13 +12,13 @@ import sklearn
 categories = [
    'business','entertainment',"sport" , 'tech','politics']
 
-dataset = sklearn.datasets.load_files('/home/mabrin/project/cluster/datasets/bbcTest/',
+dataset = sklearn.datasets.load_files('/home/amish/cluster/datasets/bbcTest/',
                                       description=None, categories=categories ,
                                       load_content=True, shuffle=False, 
                                       encoding = 'utf-8',decode_error='ignore',
                                       random_state= 70)
 
-datasetT = sklearn.datasets.load_files('/home/mabrin/project/cluster/datasets/bbc/',
+datasetT = sklearn.datasets.load_files('/home/amish/cluster/datasets/bbc/',
                                       description=None, categories=categories ,
                                       load_content=True, shuffle=True, 
                                       encoding = 'utf-8',decode_error='ignore',
@@ -25,13 +28,14 @@ datasetT = sklearn.datasets.load_files('/home/mabrin/project/cluster/datasets/bb
 true_k = 5 #no of groups
 
 vectorizer = TfidfVectorizer(max_df=.6, max_features=250 ,min_df=.01 ,
-                                    stop_words='english',use_idf=True)
+                                    #stop_words='english',use_idf=True)
+#vectorizer = CountVectorizer( encoding = 'utf-8' , decode_error='ignore', strip_accents=None, stop_words='english', analyzer='word', max_df=0.6, min_df=0.01, max_features=2500, vocabulary=None)
                                     
-X2 = vectorizer.fit_transform(dataset.data[:50]).toarray()
-X5 = vectorizer.fit_transform(dataset.data[50:100]).toarray()
-X3 = vectorizer.fit_transform(dataset.data[100:150]).toarray()
-X4 = vectorizer.fit_transform(dataset.data[150:200]).toarray()
-X1 = vectorizer.fit_transform(dataset.data[200:]).toarray()
+X2 = vectorizer.fit_transform(dataset.data[:100]).toarray()
+X5 = vectorizer.fit_transform(dataset.data[100:200]).toarray()
+X3 = vectorizer.fit_transform(dataset.data[200:300]).toarray()
+X4 = vectorizer.fit_transform(dataset.data[300:400]).toarray()
+X1 = vectorizer.fit_transform(dataset.data[400:]).toarray()
 X6 = vectorizer.fit_transform(datasetT.data).toarray()
 
 X = [X1,X2,X3,X4,X5]
@@ -46,7 +50,7 @@ for i in X:
         tmp =float(0)
         for l in range(i.shape[0]):
             tmp = tmp+ i[l,k]
-        s.append(tmp / 50)
+        s.append(tmp / 100)
     centriole.append(s)
 exit
 
@@ -64,7 +68,7 @@ cur = X6
 clusters = [[],[],[],[],[]]
 
 for i in range(5):
-    for filename in dataset.filenames[i*50:(i+1)*50-1]:
+    for filename in dataset.filenames[i*100:(i+1)*100-1]:
         clusters[i].append(filename)
 
 exit
