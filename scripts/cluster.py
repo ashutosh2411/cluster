@@ -7,7 +7,7 @@ import numpy as np
 import sklearn
 
 categories = [
-   "business" ,"sport" , 'entertainment', 'tech','politics']
+   "business" ,"sport", 'entertainment', 'tech', 'politics']
 
 dataset = sklearn.datasets.load_files('/home/mabrin/project/cluster/datasets/bbcTest/',
                                       description=None, categories=categories ,
@@ -21,8 +21,12 @@ true_k = 5 #no of groups
 vectorizer = TfidfVectorizer(max_df=.5, max_features=310 ,min_df=10 ,
                                     stop_words='english',use_idf=True)
                                     
-X = vectorizer.fit_transform(dataset.data[:125])
-Y = vectorizer.fit_transform(dataset.data[125:])
+dat = vectorizer.fit_transform(dataset.data)
+dat = dat.array()
+X = dat[:125]
+Y = dat[125:]
+
+
 
 
 km = MiniBatchKMeans(n_clusters=true_k, init='k-means++', n_init=1,
@@ -31,7 +35,7 @@ km.fit(X)
 
 
 
-cur = Y.toarray()
+cur = Y
 
 clusters = defaultdict(list)
 
