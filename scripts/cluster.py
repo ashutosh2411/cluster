@@ -5,7 +5,7 @@ Program to cluster large number of documents
 from collections import defaultdict
 import sklearn.datasets
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.cluster import MiniBatchKMeans
+from sklearn.cluster import KMeans
 import numpy as np
 import sklearn
 
@@ -29,7 +29,7 @@ dat = dat.toarray()
 X = dat[:125]
 Y = dat[125:]
 
-km = MiniBatchKMeans(n_clusters=true_k, init='k-means++', n_init=1, init_size=1000,batch_size=1000)
+km = KMeans(n_clusters=true_k)
 km.fit(X)
 
 cur = Y
