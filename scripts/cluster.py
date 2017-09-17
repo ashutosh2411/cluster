@@ -19,8 +19,8 @@ def using(point = ""):
                 (usage[2]*resource.getpagesize())/1000000.0 )
 u_start = using('start')
 
-data = raw_input("folder containing the folders. Don't add / in the end\n")
-
+data = raw_input("folder containing the folders. Don't add / in the end.\n")
+close_folder = raw_input("folder to dump output files. Don't add / in the end.\n")
 categories = [f for f in listdir(data) if not isfile(join(data, f))]
 #print categories
 #categories = ["business" ,"sport", 'entertainment', 'tech', 'politics']
@@ -71,7 +71,7 @@ for i in range(0,left_doc):
 	vishal[k].append(dataset.filenames[i+factor][:-7]) 	
 #	print (dataset.filenames[i+factor])
 u_afterCluster = using("After Clustering")
-file = open('cluster.txt', 'w')
+file = open(close_folder+'cluster.txt', 'w')
 for i in range(true_k):
 		for j in clusters[i]:
 			file.write(j)
@@ -80,7 +80,7 @@ sum = 0
 #print len(dataset.data)
 #print type(vishal[i])
 file.close()
-file = open('resourses.txt', 'w')
+file = open(close_folder+'resourses.txt', 'w')
 for i in range (len(vishal)):
 	counter = collections.Counter(vishal[i])
 	sum = sum + len(vishal[i]) - max(counter.values())
