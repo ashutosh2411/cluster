@@ -18,7 +18,9 @@ def using(point = ""):
            '''%(point,usage[0],usage[1],
                 (usage[2]*resource.getpagesize())/1000000.0 )
 u_start = using('start')
-data = '../datasets/bbc'
+
+data = raw_input("folder containing the folders. Don't add / in the end\n")
+
 categories = [f for f in listdir(data) if not isfile(join(data, f))]
 #print categories
 #categories = ["business" ,"sport", 'entertainment', 'tech', 'politics']
@@ -35,7 +37,7 @@ dat = vectorizer.fit_transform(dataset.data)
 dat = dat.toarray()
 u_Vect = using()
 
-factor = int(len(dataset.data) / 20)
+factor = int(len(dataset.data) / 5)
 
 X = dat[:factor]
 Y = dat[factor:]
@@ -68,17 +70,21 @@ for i in range(0,left_doc):
 	clusters[k].append(dataset.filenames[i+factor])
 	vishal[k].append(dataset.filenames[i+factor][:-7]) 	
 #	print (dataset.filenames[i+factor])
-u_afterCluster = using()
-
-#for i in range(true_k):
-#		for j in clusters[i]:
-#			print(j)
-#		print ""
+u_afterCluster = using("After Clustering")
+file = open('cluster.txt', 'w')
+for i in range(true_k):
+		for j in clusters[i]:
+			file.write(j)
+		file.write('\n')
 sum = 0
 #print len(dataset.data)
 #print type(vishal[i])
+file.close()
+file = open('resourses.txt', 'w')
 for i in range (len(vishal)):
 	counter = collections.Counter(vishal[i])
 	sum = sum + len(vishal[i]) - max(counter.values())
-print 'accuracy: ',(1-float(sum)/len(dataset.data))*100
-print (u_afterCluster)
+print 'accuracy is ' + str((1-float(sum)/len(dataset.data))*100)
+file.write('accuracy: '+str((1-float(sum)/len(dataset.data))*100)+'\n')
+file.write(u_afterCluster)
+file.close()
