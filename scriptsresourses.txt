@@ -1,3 +1,0 @@
-accuracy: 87.4606741573
-After Clustering: usertime=1.768 systime=1.912 mem=470.482944 mb
-           
