@@ -1,5 +1,7 @@
 # cluster
-Clustering huge number of documents more efficiently than traditional algorithms.
+Clustering huge number of documents more efficiently than traditional algorithms. 
+
+Find implementation details [here](/report.pdf)
 
 Project as a part of Programming Paradigms course
 
