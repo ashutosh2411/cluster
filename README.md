@@ -1,4 +1,6 @@
 # cluster
+Clustering huge number of documents more efficiently than traditional algorithms.
+
 Project as a part of Programming Paradigms course
 
 Input Format:
